@@ -1,0 +1,11 @@
+TimeToLevel - Copy the TimeToLevel folder into your LOTRO Plugins folder:
+
+  Plugins/TimeToLevel/TimeToLevel.plugin
+  Plugins/TimeToLevel/TimeToLevel/Main.lua
+  Plugins/TimeToLevel/TimeToLevel/... (other .lua files)
+
+Same layout as Songbook (Chiran/Songbook.plugin + Chiran/Songbook/) or HugeBag.
+
+In game: /plugins load TimeToLevel
+
+If you see "Unable to resolve package", confirm the folder nesting matches above.

@@ -3,7 +3,7 @@
 	<Information>
 		<Name>TimeToLevel</Name>
 		<Author>TimeToLevel</Author>
-		<Version>1.2.4</Version>
+		<Version>1.2.5</Version>
 	</Information>
-	<Package>TimeToLevel.Main</Package>
+	<Package>TimeToLevel.TimeToLevel.Main</Package>
 </Plugin>

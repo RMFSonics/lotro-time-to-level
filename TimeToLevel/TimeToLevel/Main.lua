@@ -2,13 +2,13 @@ import "Turbine.UI";
 import "Turbine.UI.Lotro";
 import "Turbine.Gameplay";
 
-import "TimeToLevel.Settings";
-import "TimeToLevel.Callbacks";
-import "TimeToLevel.Util";
-import "TimeToLevel.LevelXpCost";
-import "TimeToLevel.Window";
-import "TimeToLevel.ToggleButton";
-import "TimeToLevel.Tracker";
+import "TimeToLevel.TimeToLevel.Settings";
+import "TimeToLevel.TimeToLevel.Callbacks";
+import "TimeToLevel.TimeToLevel.Util";
+import "TimeToLevel.TimeToLevel.LevelXpCost";
+import "TimeToLevel.TimeToLevel.Window";
+import "TimeToLevel.TimeToLevel.ToggleButton";
+import "TimeToLevel.TimeToLevel.Tracker";
 
 TimeToLevel.debugChat = false;
 
@@ -80,7 +80,7 @@ function TimeToLevel.command:GetHelp()
 end
 
 Turbine.Shell.AddCommand("ttl", TimeToLevel.command);
-Turbine.Shell.WriteLine("TimeToLevel v1.2.4 loaded. Click TTL to toggle, drag to move.");
+Turbine.Shell.WriteLine("TimeToLevel v1.2.5 loaded. Click TTL to toggle, drag to move.");
 
 Plugins["TimeToLevel"].Unload = function()
 	TimeToLevel.tracker:Stop();

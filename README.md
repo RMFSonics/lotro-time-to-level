@@ -3,7 +3,7 @@
 A Lord of the Rings Online plugin that tracks XP from chat, estimates time to level, and shows your progress in a movable window.
 
 ![LOTRO](https://img.shields.io/badge/LOTRO-Plugin-blue)
-![Version](https://img.shields.io/badge/version-1.2.4-green)
+![Version](https://img.shields.io/badge/version-1.2.5-green)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 ## Features
@@ -25,7 +25,7 @@ Download the zip from the [latest release](https://github.com/RMFSonics/lotro-ti
 
 1. Open [github.com/RMFSonics/lotro-time-to-level](https://github.com/RMFSonics/lotro-time-to-level)
 2. Click **Code** → **Download ZIP**
-3. Extract and copy **`TimeToLevel.plugin`** and the **`TimeToLevel`** folder into your LOTRO **`Plugins`** folder
+3. Extract and copy the entire **`TimeToLevel`** folder into your LOTRO **`Plugins`** folder
 
 See [docs/INSTALL.md](docs/INSTALL.md) for full install steps.
 
@@ -47,16 +47,17 @@ Full command list: [docs/USAGE.md](docs/USAGE.md)
 
 ```
 Plugins/
-  TimeToLevel.plugin          ← plugin manifest (required here)
   TimeToLevel/
-    Main.lua                    ← entry point, /ttl commands
-    Tracker.lua                 ← XP parsing and session tracking
-    Window.lua                  ← main UI window
-    ToggleButton.lua            ← TTL launcher button
-    LevelXpCost.lua             ← XP-to-level table (levels 1–160)
-    Settings.lua                ← saved settings
-    Util.lua                    ← helpers
-    Callbacks.lua               ← event callback utilities
+    TimeToLevel.plugin          ← plugin manifest
+    TimeToLevel/
+      Main.lua                  ← entry point, /ttl commands
+      Tracker.lua               ← XP parsing and session tracking
+      Window.lua                ← main UI window
+      ToggleButton.lua          ← TTL launcher button
+      LevelXpCost.lua           ← XP-to-level table (levels 1–160)
+      Settings.lua              ← saved settings
+      Util.lua                  ← helpers
+      Callbacks.lua             ← event callback utilities
 ```
 
 ## XP data sources
