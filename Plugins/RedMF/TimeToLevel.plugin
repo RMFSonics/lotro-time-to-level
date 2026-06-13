@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Plugin>
+	<Information>
+		<Name>TimeToLevel</Name>
+		<Author>RedMF</Author>
+		<Version>1.2.2</Version>
+	</Information>
+	<Package>RedMF.TimeToLevel.Main</Package>
+</Plugin>
