@@ -1,7 +1,6 @@
-RedMF = RedMF or {};
-RedMF.TimeToLevel = RedMF.TimeToLevel or {};
+TimeToLevel = TimeToLevel or {};
 
-function RedMF.TimeToLevel.ParseNumber(value)
+function TimeToLevel.ParseNumber(value)
 	if value == nil then
 		return nil;
 	end
@@ -10,7 +9,7 @@ function RedMF.TimeToLevel.ParseNumber(value)
 	return tonumber(normalized);
 end
 
-function RedMF.TimeToLevel.FormatNumber(value)
+function TimeToLevel.FormatNumber(value)
 	local number = math.floor(value or 0);
 	local text = tostring(number);
 	local sign = "";
@@ -28,7 +27,7 @@ function RedMF.TimeToLevel.FormatNumber(value)
 	return sign .. text;
 end
 
-function RedMF.TimeToLevel.FormatDuration(totalSeconds)
+function TimeToLevel.FormatDuration(totalSeconds)
 	local seconds = math.max(0, math.floor(totalSeconds or 0));
 	local hours = math.floor(seconds / 3600);
 	local minutes = math.floor((seconds % 3600) / 60);
@@ -41,7 +40,7 @@ function RedMF.TimeToLevel.FormatDuration(totalSeconds)
 	return string.format("%d:%02d", minutes, remainder);
 end
 
-function RedMF.TimeToLevel.NormalizeSeconds(timeValue)
+function TimeToLevel.NormalizeSeconds(timeValue)
 	if timeValue == nil then
 		return nil;
 	end
@@ -64,11 +63,11 @@ function RedMF.TimeToLevel.NormalizeSeconds(timeValue)
 	return nil;
 end
 
-function RedMF.TimeToLevel.GetNowSeconds()
+function TimeToLevel.GetNowSeconds()
 	local now = Turbine.Engine.GetLocalTime();
 	if type(now) == "number" then
 		return now;
 	end
 
-	return RedMF.TimeToLevel.NormalizeSeconds(now) or 0;
+	return TimeToLevel.NormalizeSeconds(now) or 0;
 end

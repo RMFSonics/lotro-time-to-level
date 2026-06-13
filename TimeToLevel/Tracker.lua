@@ -1,10 +1,9 @@
-RedMF = RedMF or {};
-RedMF.TimeToLevel = RedMF.TimeToLevel or {};
+TimeToLevel = TimeToLevel or {};
 
-RedMF.TimeToLevel.Tracker = {};
-RedMF.TimeToLevel.Tracker.__index = RedMF.TimeToLevel.Tracker;
+TimeToLevel.Tracker = {};
+TimeToLevel.Tracker.__index = TimeToLevel.Tracker;
 
-function RedMF.TimeToLevel.Tracker:New(window)
+function TimeToLevel.Tracker:New(window)
 	local tracker = setmetatable({}, self);
 	tracker.window = window;
 	tracker.player = Turbine.Gameplay.LocalPlayer:GetInstance();
@@ -15,7 +14,7 @@ function RedMF.TimeToLevel.Tracker:New(window)
 	tracker.lifetimeFloor = nil;
 	tracker.lastLifetimeTotal = nil;
 	tracker.xpRequiredOverride = nil;
-	tracker.levelStartSeconds = RedMF.TimeToLevel.GetNowSeconds();
+	tracker.levelStartSeconds = TimeToLevel.GetNowSeconds();
 	tracker.hasXpSample = false;
 	tracker.lastSaveSeconds = 0;
 	tracker.chatHandler = function(_, args) tracker:OnChatReceived(args); end;
@@ -23,14 +22,14 @@ function RedMF.TimeToLevel.Tracker:New(window)
 	return tracker;
 end
 
-function RedMF.TimeToLevel.Tracker:LoadState()
+function TimeToLevel.Tracker:LoadState()
 	local saved = Turbine.PluginData.Load(Turbine.DataScope.Character, "TimeToLevelState");
 	if saved == nil then
 		return;
 	end
 
 	if saved.level == self.level then
-		if saved.dataVersion ~= RedMF.TimeToLevel.DATA_VERSION then
+		if saved.dataVersion ~= TimeToLevel.DATA_VERSION then
 			self.xpRequiredOverride = nil;
 			self.levelStartTotal = nil;
 		end
@@ -41,17 +40,17 @@ function RedMF.TimeToLevel.Tracker:LoadState()
 		self.lifetimeFloor = saved.lifetimeFloor;
 		self.lastLifetimeTotal = saved.lastLifetimeTotal;
 		self.xpRequiredOverride = saved.xpRequiredOverride;
-		self.levelStartSeconds = RedMF.TimeToLevel.NormalizeSeconds(saved.levelStartSeconds)
-			or RedMF.TimeToLevel.GetNowSeconds();
+		self.levelStartSeconds = TimeToLevel.NormalizeSeconds(saved.levelStartSeconds)
+			or TimeToLevel.GetNowSeconds();
 		self.hasXpSample = (self.xpGained or 0) > 0 or (self.sessionXpEarned or 0) > 0;
 	else
 		self:ResetLevelSession(self.level);
 	end
 end
 
-function RedMF.TimeToLevel.Tracker:SaveState()
+function TimeToLevel.Tracker:SaveState()
 	Turbine.PluginData.Save(Turbine.DataScope.Character, "TimeToLevelState", {
-		dataVersion = RedMF.TimeToLevel.DATA_VERSION,
+		dataVersion = TimeToLevel.DATA_VERSION,
 		level = self.level,
 		xpGained = self.xpGained,
 		sessionXpEarned = self.sessionXpEarned,
@@ -67,7 +66,7 @@ function RedMF.TimeToLevel.Tracker:SaveState()
 	end);
 end
 
-function RedMF.TimeToLevel.Tracker:ResetLevelSession(level)
+function TimeToLevel.Tracker:ResetLevelSession(level)
 	self.level = level or self.player:GetLevel();
 	self.xpGained = 0;
 	self.sessionXpEarned = 0;
@@ -75,25 +74,25 @@ function RedMF.TimeToLevel.Tracker:ResetLevelSession(level)
 	self.lifetimeFloor = nil;
 	self.lastLifetimeTotal = nil;
 	self.xpRequiredOverride = nil;
-	self.levelStartSeconds = RedMF.TimeToLevel.GetNowSeconds();
+	self.levelStartSeconds = TimeToLevel.GetNowSeconds();
 	self.hasXpSample = false;
 	self:SaveState();
 	self:RefreshDisplay();
 end
 
-function RedMF.TimeToLevel.Tracker:GetXpRequired()
+function TimeToLevel.Tracker:GetXpRequired()
 	if self.xpRequiredOverride ~= nil and self.xpRequiredOverride > 0 then
 		return self.xpRequiredOverride;
 	end
 
-	return RedMF.TimeToLevel.GetXpToLevel(self.level);
+	return TimeToLevel.GetXpToLevel(self.level);
 end
 
-function RedMF.TimeToLevel.Tracker:GetElapsedSeconds()
-	return math.max(0, RedMF.TimeToLevel.GetNowSeconds() - self.levelStartSeconds);
+function TimeToLevel.Tracker:GetElapsedSeconds()
+	return math.max(0, TimeToLevel.GetNowSeconds() - self.levelStartSeconds);
 end
 
-function RedMF.TimeToLevel.Tracker:GetStats()
+function TimeToLevel.Tracker:GetStats()
 	local xpRequired = self:GetXpRequired();
 	local xpRemaining = math.max(0, xpRequired - self.xpGained);
 	local elapsed = self:GetElapsedSeconds();
@@ -145,7 +144,7 @@ function RedMF.TimeToLevel.Tracker:GetStats()
 	};
 end
 
-function RedMF.TimeToLevel.Tracker:IsCharacterXpMessage(message)
+function TimeToLevel.Tracker:IsCharacterXpMessage(message)
 	if message == nil then
 		return false;
 	end
@@ -166,7 +165,7 @@ function RedMF.TimeToLevel.Tracker:IsCharacterXpMessage(message)
 		and string.find(lower, " xp", 1, true) ~= nil;
 end
 
-function RedMF.TimeToLevel.Tracker:ParseXpMessage(message)
+function TimeToLevel.Tracker:ParseXpMessage(message)
 	if message == nil or not self:IsCharacterXpMessage(message) then
 		return nil;
 	end
@@ -185,8 +184,8 @@ function RedMF.TimeToLevel.Tracker:ParseXpMessage(message)
 			or string.match(message, "You have gained ([%d,]+) experience points?");
 	end
 
-	local gain = RedMF.TimeToLevel.ParseNumber(gainStr);
-	local total = RedMF.TimeToLevel.ParseNumber(totalStr);
+	local gain = TimeToLevel.ParseNumber(gainStr);
+	local total = TimeToLevel.ParseNumber(totalStr);
 
 	if gain == nil and total == nil then
 		return nil;
@@ -198,7 +197,7 @@ function RedMF.TimeToLevel.Tracker:ParseXpMessage(message)
 	};
 end
 
-function RedMF.TimeToLevel.Tracker:ApplyXpMessage(xpMessage)
+function TimeToLevel.Tracker:ApplyXpMessage(xpMessage)
 	if xpMessage == nil then
 		return false;
 	end
@@ -233,11 +232,11 @@ function RedMF.TimeToLevel.Tracker:ApplyXpMessage(xpMessage)
 	return true;
 end
 
-function RedMF.TimeToLevel.Tracker:Sync(currentXp, requiredXp)
+function TimeToLevel.Tracker:Sync(currentXp, requiredXp)
 	if currentXp ~= nil and currentXp >= 0 then
 		self.xpGained = currentXp;
 		self.sessionXpEarned = 0;
-		self.levelStartSeconds = RedMF.TimeToLevel.GetNowSeconds();
+		self.levelStartSeconds = TimeToLevel.GetNowSeconds();
 		self.hasXpSample = true;
 
 		if self.lastLifetimeTotal ~= nil then
@@ -247,7 +246,7 @@ function RedMF.TimeToLevel.Tracker:Sync(currentXp, requiredXp)
 
 	if requiredXp ~= nil and requiredXp > 0 then
 		self.xpRequiredOverride = requiredXp;
-		RedMF.TimeToLevel.LevelXpCost[self.level + 1] = requiredXp;
+		TimeToLevel.LevelXpCost[self.level + 1] = requiredXp;
 	end
 
 	self:SaveState();
@@ -255,13 +254,13 @@ function RedMF.TimeToLevel.Tracker:Sync(currentXp, requiredXp)
 
 	Turbine.Shell.WriteLine(string.format(
 		"TimeToLevel: synced to %s / %s XP for level %d.",
-		RedMF.TimeToLevel.FormatNumber(self.xpGained),
-		RedMF.TimeToLevel.FormatNumber(self:GetXpRequired()),
+		TimeToLevel.FormatNumber(self.xpGained),
+		TimeToLevel.FormatNumber(self:GetXpRequired()),
 		self.level
 	));
 end
 
-function RedMF.TimeToLevel.Tracker:ParseLevelUp(message)
+function TimeToLevel.Tracker:ParseLevelUp(message)
 	if message == nil then
 		return nil;
 	end
@@ -273,7 +272,7 @@ function RedMF.TimeToLevel.Tracker:ParseLevelUp(message)
 	return tonumber(level);
 end
 
-function RedMF.TimeToLevel.Tracker:OnChatReceived(args)
+function TimeToLevel.Tracker:OnChatReceived(args)
 	if args == nil or args.Message == nil then
 		return;
 	end
@@ -281,7 +280,7 @@ function RedMF.TimeToLevel.Tracker:OnChatReceived(args)
 	local message = args.Message;
 
 	local lower = string.lower(message);
-	if RedMF.TimeToLevel.debugChat
+	if TimeToLevel.debugChat
 		and (string.find(lower, " xp", 1, true) or string.find(lower, "experience", 1, true)) then
 		Turbine.Shell.WriteLine(string.format("TimeToLevel debug [%s]: %s", tostring(args.ChatType), message));
 	end
@@ -299,45 +298,45 @@ function RedMF.TimeToLevel.Tracker:OnChatReceived(args)
 	end
 end
 
-function RedMF.TimeToLevel.Tracker:OnLevelChanged()
+function TimeToLevel.Tracker:OnLevelChanged()
 	local currentLevel = self.player:GetLevel();
 	if currentLevel ~= self.level then
 		self:ResetLevelSession(currentLevel);
 	end
 end
 
-function RedMF.TimeToLevel.Tracker:MaybeSaveState()
-	local now = RedMF.TimeToLevel.GetNowSeconds();
+function TimeToLevel.Tracker:MaybeSaveState()
+	local now = TimeToLevel.GetNowSeconds();
 	if now - self.lastSaveSeconds >= 15 then
 		self.lastSaveSeconds = now;
 		self:SaveState();
 	end
 end
 
-function RedMF.TimeToLevel.Tracker:RefreshDisplay()
+function TimeToLevel.Tracker:RefreshDisplay()
 	if self.window ~= nil then
 		self.window:UpdateDisplay(self:GetStats());
 	end
 end
 
-function RedMF.TimeToLevel.Tracker:Start()
+function TimeToLevel.Tracker:Start()
 	self:LoadState();
-	RedMF.TimeToLevel.AddCallback(Turbine.Chat, "Received", self.chatHandler);
-	RedMF.TimeToLevel.AddCallback(self.player, "LevelChanged", self.levelHandler);
+	TimeToLevel.AddCallback(Turbine.Chat, "Received", self.chatHandler);
+	TimeToLevel.AddCallback(self.player, "LevelChanged", self.levelHandler);
 	self:RefreshDisplay();
 end
 
-function RedMF.TimeToLevel.Tracker:Stop()
-	RedMF.TimeToLevel.RemoveCallback(Turbine.Chat, "Received", self.chatHandler);
-	RedMF.TimeToLevel.RemoveCallback(self.player, "LevelChanged", self.levelHandler);
+function TimeToLevel.Tracker:Stop()
+	TimeToLevel.RemoveCallback(Turbine.Chat, "Received", self.chatHandler);
+	TimeToLevel.RemoveCallback(self.player, "LevelChanged", self.levelHandler);
 	self:SaveState();
 end
 
-function RedMF.TimeToLevel.Tracker:Reset()
+function TimeToLevel.Tracker:Reset()
 	self:ResetLevelSession(self.player:GetLevel());
 end
 
-function RedMF.TimeToLevel.Tracker:ReportToChat()
+function TimeToLevel.Tracker:ReportToChat()
 	local stats = self:GetStats();
 
 	if stats.xpRequired <= 0 then
@@ -350,7 +349,7 @@ function RedMF.TimeToLevel.Tracker:ReportToChat()
 			"TimeToLevel: level %d -> %d. Gain XP to start timing (0 / %s).",
 			stats.level,
 			stats.nextLevel,
-			RedMF.TimeToLevel.FormatNumber(stats.xpRequired)
+			TimeToLevel.FormatNumber(stats.xpRequired)
 		));
 		return;
 	end
@@ -358,7 +357,7 @@ function RedMF.TimeToLevel.Tracker:ReportToChat()
 	local etaText = "ready now";
 	if stats.xpRemaining > 0 then
 		if stats.etaSeconds ~= nil then
-			etaText = RedMF.TimeToLevel.FormatDuration(stats.etaSeconds);
+			etaText = TimeToLevel.FormatDuration(stats.etaSeconds);
 		else
 			etaText = "unknown";
 		end
@@ -368,11 +367,11 @@ function RedMF.TimeToLevel.Tracker:ReportToChat()
 		"TimeToLevel: %d -> %d | %s / %s (%.1f%%) | this level %s | %s XP/min | ETA %s",
 		stats.level,
 		stats.nextLevel,
-		RedMF.TimeToLevel.FormatNumber(stats.xpGained),
-		RedMF.TimeToLevel.FormatNumber(stats.xpRequired),
+		TimeToLevel.FormatNumber(stats.xpGained),
+		TimeToLevel.FormatNumber(stats.xpRequired),
 		stats.percent,
-		RedMF.TimeToLevel.FormatDuration(stats.elapsedSeconds),
-		RedMF.TimeToLevel.FormatNumber(stats.xpPerMinute),
+		TimeToLevel.FormatDuration(stats.elapsedSeconds),
+		TimeToLevel.FormatNumber(stats.xpPerMinute),
 		etaText
 	));
 end

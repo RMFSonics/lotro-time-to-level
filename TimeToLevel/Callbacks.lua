@@ -1,7 +1,6 @@
-RedMF = RedMF or {};
-RedMF.TimeToLevel = RedMF.TimeToLevel or {};
+TimeToLevel = TimeToLevel or {};
 
-function RedMF.TimeToLevel.AddCallback(object, event, callback)
+function TimeToLevel.AddCallback(object, event, callback)
 	if object[event] == nil then
 		object[event] = callback;
 	elseif type(object[event]) == "table" then
@@ -12,7 +11,7 @@ function RedMF.TimeToLevel.AddCallback(object, event, callback)
 	return callback;
 end
 
-function RedMF.TimeToLevel.RemoveCallback(object, event, callback)
+function TimeToLevel.RemoveCallback(object, event, callback)
 	if object[event] == nil then
 		return;
 	end

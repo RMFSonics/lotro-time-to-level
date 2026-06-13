@@ -3,7 +3,7 @@
 A Lord of the Rings Online plugin that tracks XP from chat, estimates time to level, and shows your progress in a movable window.
 
 ![LOTRO](https://img.shields.io/badge/LOTRO-Plugin-blue)
-![Version](https://img.shields.io/badge/version-1.2.3-green)
+![Version](https://img.shields.io/badge/version-1.2.4-green)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 ## Features
@@ -25,7 +25,7 @@ Download the zip from the [latest release](https://github.com/RMFSonics/lotro-ti
 
 1. Open [github.com/RMFSonics/lotro-time-to-level](https://github.com/RMFSonics/lotro-time-to-level)
 2. Click **Code** → **Download ZIP**
-3. Extract and copy the `Plugins/RedMF` folder into your LOTRO plugins directory
+3. Extract and copy **`TimeToLevel.plugin`** and the **`TimeToLevel`** folder into your LOTRO **`Plugins`** folder
 
 See [docs/INSTALL.md](docs/INSTALL.md) for full install steps.
 
@@ -46,7 +46,7 @@ Full command list: [docs/USAGE.md](docs/USAGE.md)
 ## Project layout
 
 ```
-Plugins/RedMF/
+Plugins/
   TimeToLevel.plugin          ← plugin manifest (required here)
   TimeToLevel/
     Main.lua                    ← entry point, /ttl commands
@@ -65,12 +65,8 @@ Level XP costs are based on [Lotro-Wiki Character XP Calculation](https://lotro-
 
 ## Contributing
 
-Issues and pull requests are welcome. This repo is the public home for the TimeToLevel plugin; more RedMF LOTRO addons may be added as separate projects later.
+Issues and pull requests are welcome.
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
-## Author
-
-RedMF

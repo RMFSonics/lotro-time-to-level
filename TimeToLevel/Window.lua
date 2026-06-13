@@ -1,30 +1,29 @@
-RedMF = RedMF or {};
 
-RedMF.TimeToLevel = RedMF.TimeToLevel or {};
-
-
-
-RedMF.TimeToLevel.Window = {};
-
-RedMF.TimeToLevel.Window.__index = RedMF.TimeToLevel.Window;
+TimeToLevel = TimeToLevel or {};
 
 
 
-RedMF.TimeToLevel.Window.MIN_WIDTH = 260;
+TimeToLevel.Window = {};
 
-RedMF.TimeToLevel.Window.MIN_HEIGHT = 204;
-
-RedMF.TimeToLevel.Window.PADDING = 12;
+TimeToLevel.Window.__index = TimeToLevel.Window;
 
 
 
-function RedMF.TimeToLevel.Window:New()
+TimeToLevel.Window.MIN_WIDTH = 260;
+
+TimeToLevel.Window.MIN_HEIGHT = 204;
+
+TimeToLevel.Window.PADDING = 12;
+
+
+
+function TimeToLevel.Window:New()
 
 	local window = setmetatable({}, self);
 
 
 
-	RedMF.TimeToLevel.LoadSettings();
+	TimeToLevel.LoadSettings();
 
 
 
@@ -34,17 +33,17 @@ function RedMF.TimeToLevel.Window:New()
 
 	window.control:SetSize(
 
-		RedMF.TimeToLevel.Settings.width or RedMF.TimeToLevel.Window.MIN_WIDTH,
+		TimeToLevel.Settings.width or TimeToLevel.Window.MIN_WIDTH,
 
-		RedMF.TimeToLevel.Settings.height or RedMF.TimeToLevel.Window.MIN_HEIGHT
+		TimeToLevel.Settings.height or TimeToLevel.Window.MIN_HEIGHT
 
 	);
 
-	window.control:SetPosition(RedMF.TimeToLevel.Settings.left, RedMF.TimeToLevel.Settings.top);
+	window.control:SetPosition(TimeToLevel.Settings.left, TimeToLevel.Settings.top);
 
-	window.control:SetOpacity(RedMF.TimeToLevel.Settings.opacity);
+	window.control:SetOpacity(TimeToLevel.Settings.opacity);
 
-	window.control:SetVisible(RedMF.TimeToLevel.Settings.visible);
+	window.control:SetVisible(TimeToLevel.Settings.visible);
 
 	window.control:SetZOrder(75);
 
@@ -194,7 +193,7 @@ function RedMF.TimeToLevel.Window:New()
 
 	window.alphaScrollLocked = true;
 
-	window.alphaScroll:SetValue(math.floor((RedMF.TimeToLevel.Settings.opacity or 0.82) * 100 + 0.5));
+	window.alphaScroll:SetValue(math.floor((TimeToLevel.Settings.opacity or 0.82) * 100 + 0.5));
 
 	window.alphaScrollLocked = false;
 
@@ -208,7 +207,7 @@ function RedMF.TimeToLevel.Window:New()
 
 	window.alphaValueLabel:SetForeColor(Turbine.UI.Color(1, 0.78, 0.88, 0.65));
 
-	window.alphaValueLabel:SetText(string.format("%.2f", RedMF.TimeToLevel.Settings.opacity or 0.82));
+	window.alphaValueLabel:SetText(string.format("%.2f", TimeToLevel.Settings.opacity or 0.82));
 
 
 
@@ -366,7 +365,7 @@ function RedMF.TimeToLevel.Window:New()
 
 	window:ApplyLayout();
 
-	RedMF.TimeToLevel.ClampWindowPosition(window.control);
+	TimeToLevel.ClampWindowPosition(window.control);
 
 	window:UpdateDisplay({
 
@@ -402,13 +401,13 @@ end
 
 
 
-function RedMF.TimeToLevel.Window:ApplyLayout()
+function TimeToLevel.Window:ApplyLayout()
 
-	local width = math.max(self.control:GetWidth(), RedMF.TimeToLevel.Window.MIN_WIDTH);
+	local width = math.max(self.control:GetWidth(), TimeToLevel.Window.MIN_WIDTH);
 
-	local height = math.max(self.control:GetHeight(), RedMF.TimeToLevel.Window.MIN_HEIGHT);
+	local height = math.max(self.control:GetHeight(), TimeToLevel.Window.MIN_HEIGHT);
 
-	local pad = RedMF.TimeToLevel.Window.PADDING;
+	local pad = TimeToLevel.Window.PADDING;
 
 	local contentWidth = width - (pad * 2);
 
@@ -508,9 +507,9 @@ function RedMF.TimeToLevel.Window:ApplyLayout()
 
 
 
-	if RedMF.TimeToLevel.tracker ~= nil then
+	if TimeToLevel.tracker ~= nil then
 
-		local stats = RedMF.TimeToLevel.tracker:GetStats();
+		local stats = TimeToLevel.tracker:GetStats();
 
 		if stats ~= nil then
 
@@ -524,13 +523,13 @@ end
 
 
 
-function RedMF.TimeToLevel.Window:SetOpacity(opacity)
+function TimeToLevel.Window:SetOpacity(opacity)
 
 	local clampedOpacity = math.max(0, math.min(opacity or 0, 1));
 
 	self.control:SetOpacity(clampedOpacity);
 
-	RedMF.TimeToLevel.Settings.opacity = clampedOpacity;
+	TimeToLevel.Settings.opacity = clampedOpacity;
 
 
 
@@ -544,17 +543,17 @@ function RedMF.TimeToLevel.Window:SetOpacity(opacity)
 
 	self.alphaValueLabel:SetText(string.format("%.2f", clampedOpacity));
 
-	RedMF.TimeToLevel.SaveSettings();
+	TimeToLevel.SaveSettings();
 
 end
 
 
 
-function RedMF.TimeToLevel.Window:ApplySyncFromInputs()
+function TimeToLevel.Window:ApplySyncFromInputs()
 
-	local currentXp = RedMF.TimeToLevel.ParseNumber(self.syncCurrentInput:GetText());
+	local currentXp = TimeToLevel.ParseNumber(self.syncCurrentInput:GetText());
 
-	local requiredXp = RedMF.TimeToLevel.ParseNumber(self.syncRequiredInput:GetText());
+	local requiredXp = TimeToLevel.ParseNumber(self.syncRequiredInput:GetText());
 
 
 
@@ -576,11 +575,11 @@ function RedMF.TimeToLevel.Window:ApplySyncFromInputs()
 
 
 
-	if RedMF.TimeToLevel.tracker ~= nil then
+	if TimeToLevel.tracker ~= nil then
 
-		RedMF.TimeToLevel.tracker:Sync(currentXp, requiredXp);
+		TimeToLevel.tracker:Sync(currentXp, requiredXp);
 
-		self:UpdateDisplay(RedMF.TimeToLevel.tracker:GetStats());
+		self:UpdateDisplay(TimeToLevel.tracker:GetStats());
 
 	end
 
@@ -588,7 +587,7 @@ end
 
 
 
-function RedMF.TimeToLevel.Window:UpdateSyncFields(stats)
+function TimeToLevel.Window:UpdateSyncFields(stats)
 
 	if self.syncFieldsLocked or stats == nil then
 
@@ -612,41 +611,41 @@ end
 
 
 
-function RedMF.TimeToLevel.Window:SavePosition()
+function TimeToLevel.Window:SavePosition()
 
-	RedMF.TimeToLevel.Settings.left = self.control:GetLeft();
+	TimeToLevel.Settings.left = self.control:GetLeft();
 
-	RedMF.TimeToLevel.Settings.top = self.control:GetTop();
+	TimeToLevel.Settings.top = self.control:GetTop();
 
-	RedMF.TimeToLevel.SaveSettings();
-
-end
-
-
-
-function RedMF.TimeToLevel.Window:SaveSize()
-
-	RedMF.TimeToLevel.Settings.width = self.control:GetWidth();
-
-	RedMF.TimeToLevel.Settings.height = self.control:GetHeight();
-
-	RedMF.TimeToLevel.SaveSettings();
+	TimeToLevel.SaveSettings();
 
 end
 
 
 
-function RedMF.TimeToLevel.Window:OnUpdate()
+function TimeToLevel.Window:SaveSize()
 
-	local now = RedMF.TimeToLevel.GetNowSeconds();
+	TimeToLevel.Settings.width = self.control:GetWidth();
+
+	TimeToLevel.Settings.height = self.control:GetHeight();
+
+	TimeToLevel.SaveSettings();
+
+end
+
+
+
+function TimeToLevel.Window:OnUpdate()
+
+	local now = TimeToLevel.GetNowSeconds();
 
 	if now - self.lastRefreshSeconds >= 1 then
 
 		self.lastRefreshSeconds = now;
 
-		if RedMF.TimeToLevel.tracker ~= nil then
+		if TimeToLevel.tracker ~= nil then
 
-			self:UpdateDisplay(RedMF.TimeToLevel.tracker:GetStats());
+			self:UpdateDisplay(TimeToLevel.tracker:GetStats());
 
 		end
 
@@ -656,7 +655,7 @@ end
 
 
 
-function RedMF.TimeToLevel.Window:UpdateBar(percent)
+function TimeToLevel.Window:UpdateBar(percent)
 
 	local width = self.barBack:GetWidth();
 
@@ -668,7 +667,7 @@ end
 
 
 
-function RedMF.TimeToLevel.Window:UpdateDisplay(stats)
+function TimeToLevel.Window:UpdateDisplay(stats)
 
 	if stats == nil then
 
@@ -706,7 +705,7 @@ function RedMF.TimeToLevel.Window:UpdateDisplay(stats)
 
 			"0 / %s XP (0.0%%)",
 
-			RedMF.TimeToLevel.FormatNumber(stats.xpRequired)
+			TimeToLevel.FormatNumber(stats.xpRequired)
 
 		));
 
@@ -726,9 +725,9 @@ function RedMF.TimeToLevel.Window:UpdateDisplay(stats)
 
 		"%s / %s XP (%.1f%%)",
 
-		RedMF.TimeToLevel.FormatNumber(stats.xpGained),
+		TimeToLevel.FormatNumber(stats.xpGained),
 
-		RedMF.TimeToLevel.FormatNumber(stats.xpRequired),
+		TimeToLevel.FormatNumber(stats.xpRequired),
 
 		stats.percent
 
@@ -744,7 +743,7 @@ function RedMF.TimeToLevel.Window:UpdateDisplay(stats)
 
 		if stats.etaSeconds ~= nil then
 
-			etaText = string.format("ETA %s", RedMF.TimeToLevel.FormatDuration(stats.etaSeconds));
+			etaText = string.format("ETA %s", TimeToLevel.FormatDuration(stats.etaSeconds));
 
 		else
 
@@ -760,7 +759,7 @@ function RedMF.TimeToLevel.Window:UpdateDisplay(stats)
 
 		"This level %s  |  %s",
 
-		RedMF.TimeToLevel.FormatDuration(stats.elapsedSeconds),
+		TimeToLevel.FormatDuration(stats.elapsedSeconds),
 
 		etaText
 
@@ -772,9 +771,9 @@ function RedMF.TimeToLevel.Window:UpdateDisplay(stats)
 
 		"%s XP/min  |  %s XP/hr",
 
-		RedMF.TimeToLevel.FormatNumber(stats.xpPerMinute),
+		TimeToLevel.FormatNumber(stats.xpPerMinute),
 
-		RedMF.TimeToLevel.FormatNumber(stats.xpPerHour)
+		TimeToLevel.FormatNumber(stats.xpPerHour)
 
 	));
 
@@ -782,19 +781,19 @@ end
 
 
 
-function RedMF.TimeToLevel.Window:SetVisible(visible)
+function TimeToLevel.Window:SetVisible(visible)
 
 	self.control:SetVisible(visible);
 
-	RedMF.TimeToLevel.Settings.visible = visible;
+	TimeToLevel.Settings.visible = visible;
 
-	RedMF.TimeToLevel.SaveSettings();
+	TimeToLevel.SaveSettings();
 
 end
 
 
 
-function RedMF.TimeToLevel.Window:IsVisible()
+function TimeToLevel.Window:IsVisible()
 
 	return self.control:IsVisible();
 
@@ -802,7 +801,7 @@ end
 
 
 
-function RedMF.TimeToLevel.Window:ToggleVisible()
+function TimeToLevel.Window:ToggleVisible()
 
 	self:SetVisible(not self:IsVisible());
 

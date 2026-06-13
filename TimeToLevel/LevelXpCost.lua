@@ -1,12 +1,11 @@
-RedMF = RedMF or {};
-RedMF.TimeToLevel = RedMF.TimeToLevel or {};
-RedMF.TimeToLevel.DATA_VERSION = 3;
+TimeToLevel = TimeToLevel or {};
+TimeToLevel.DATA_VERSION = 3;
 
 -- XP required to complete each level (index = destination level).
 -- Levels 2-60: Lotro-Wiki quadratic segment formulas.
 -- Levels 61-77: Lotro-Wiki Level table.
 -- Levels 78-160: Lotro-Wiki Character XP Calculation anchor table.
-RedMF.TimeToLevel.LevelXpCost = {
+TimeToLevel.LevelXpCost = {
   [1] = 0,
   [2] = 100,
   [3] = 175,
@@ -169,16 +168,16 @@ RedMF.TimeToLevel.LevelXpCost = {
   [160] = 42726555,
 };
 
-function RedMF.TimeToLevel.GetXpToLevel(level)
+function TimeToLevel.GetXpToLevel(level)
   if level == nil then return 0; end
-  return RedMF.TimeToLevel.LevelXpCost[level + 1] or 0;
+  return TimeToLevel.LevelXpCost[level + 1] or 0;
 end
 
-function RedMF.TimeToLevel.GetTotalXpToReachLevel(level)
+function TimeToLevel.GetTotalXpToReachLevel(level)
   if level == nil or level <= 1 then return 0; end
   local total = 0;
   for destinationLevel = 2, level do
-    total = total + (RedMF.TimeToLevel.LevelXpCost[destinationLevel] or 0);
+    total = total + (TimeToLevel.LevelXpCost[destinationLevel] or 0);
   end
   return total;
 end

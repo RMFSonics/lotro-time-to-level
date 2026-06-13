@@ -2,8 +2,8 @@
 <Plugin>
 	<Information>
 		<Name>TimeToLevel</Name>
-		<Author>RedMF</Author>
-		<Version>1.2.3</Version>
+		<Author>TimeToLevel</Author>
+		<Version>1.2.4</Version>
 	</Information>
-	<Package>RedMF.TimeToLevel.Main</Package>
+	<Package>TimeToLevel.Main</Package>
 </Plugin>
