@@ -80,7 +80,7 @@ function RedMF.TimeToLevel.command:GetHelp()
 end
 
 Turbine.Shell.AddCommand("ttl", RedMF.TimeToLevel.command);
-Turbine.Shell.WriteLine("TimeToLevel v1.2.2 loaded. Click TTL to toggle, drag to move.");
+Turbine.Shell.WriteLine("TimeToLevel v1.2.3 loaded. Click TTL to toggle, drag to move.");
 
 Plugins["TimeToLevel"].Unload = function()
 	RedMF.TimeToLevel.tracker:Stop();

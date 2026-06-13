@@ -3,7 +3,7 @@
 A Lord of the Rings Online plugin that tracks XP from chat, estimates time to level, and shows your progress in a movable window.
 
 ![LOTRO](https://img.shields.io/badge/LOTRO-Plugin-blue)
-![Version](https://img.shields.io/badge/version-1.2.2-green)
+![Version](https://img.shields.io/badge/version-1.2.3-green)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 ## Features
