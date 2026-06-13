@@ -42,7 +42,7 @@ Documents\The Lord of the Rings Online\Plugins\
 After loading:
 
 ```
-TimeToLevel v1.2.5 loaded. Click TTL to toggle, drag to move.
+TimeToLevel v1.2.6 loaded. Click TTL to toggle, drag to move.
 ```
 
 ## Troubleshooting

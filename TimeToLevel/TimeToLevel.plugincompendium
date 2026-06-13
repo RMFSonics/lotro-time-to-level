@@ -2,7 +2,7 @@
 <PluginConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Id>0</Id>
   <Name>TimeToLevel</Name>
-  <Version>1.2.5</Version>
+  <Version>1.2.6</Version>
   <Author>RMFSonics</Author>
   <InfoUrl>https://github.com/RMFSonics/lotro-time-to-level</InfoUrl>
   <DownloadUrl>https://github.com/RMFSonics/lotro-time-to-level/releases/latest</DownloadUrl>

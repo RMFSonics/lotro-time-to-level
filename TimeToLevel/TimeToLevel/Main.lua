@@ -80,7 +80,7 @@ function TimeToLevel.command:GetHelp()
 end
 
 Turbine.Shell.AddCommand("ttl", TimeToLevel.command);
-Turbine.Shell.WriteLine("TimeToLevel v1.2.5 loaded. Click TTL to toggle, drag to move.");
+Turbine.Shell.WriteLine("TimeToLevel v1.2.6 loaded. Click TTL to toggle, drag to move.");
 
 Plugins["TimeToLevel"].Unload = function()
 	TimeToLevel.tracker:Stop();
